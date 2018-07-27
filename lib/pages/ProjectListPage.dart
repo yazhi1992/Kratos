@@ -1,29 +1,24 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:flutter_app/pages/ProjectDetail.dart';
+import 'package:flutter_app/utils/XYRoute.dart';
+import 'package:flutter_app/widget/BaseApp.dart';
 
 class ProjectListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-                title: Text("项目列表")
-            ),
-            body: ProjectPageView()
-        )
-    );
+    return BaseApp(title: "项目列表", body: _ProjectPageView());
   }
 }
 
-class ProjectPageView extends StatefulWidget {
+class _ProjectPageView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ProjectPageViewState();
+    return _ProjectPageViewState();
   }
 }
 
-class ProjectPageViewState extends State<ProjectPageView> {
+class _ProjectPageViewState extends State<_ProjectPageView> {
 
   var projectDatas;
 
@@ -61,9 +56,7 @@ class ProjectPageViewState extends State<ProjectPageView> {
   }
 
   _gotoProjectDetail(String title) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => ProjectDetail(title: title,)));
-//       Navigator.push(context, MaterialPageRoute(builder: (context) => ProjectDetail(title: title,)));
+    XYRoute.gotoProjectDetailPage(context, title);
   }
 
   @override

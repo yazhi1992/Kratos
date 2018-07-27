@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/utils/XYRoute.dart';
+import 'package:flutter_app/widget/BaseApp.dart';
+import 'package:flutter_app/widget/RadiusBorderButton.dart';
 
 class ProjectDetail extends StatelessWidget {
 
@@ -8,26 +11,19 @@ class ProjectDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(
-                title: Text(title)
-            ),
-            body: ProjectDetailView()
-        )
-    );
+    return BaseApp(title: title, body: _ProjectDetailView());
   }
 
 }
 
-class ProjectDetailView extends StatefulWidget {
+class _ProjectDetailView extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return ProjectDetailViewState();
+    return _ProjectDetailViewState();
   }
 }
 
-class ProjectDetailViewState extends State<ProjectDetailView> {
+class _ProjectDetailViewState extends State<_ProjectDetailView> {
 
   var projectHistoryDatas;
 
@@ -46,64 +42,65 @@ class ProjectDetailViewState extends State<ProjectDetailView> {
   _buildItem(String name) {
     return Row(
       children: <Widget>[
-        Expanded(child: Container(
-          padding: const EdgeInsets.fromLTRB(40.0, 0.0, 40.0, 0.0),
+        Container(
+          padding: const EdgeInsets.fromLTRB(40.0, 0.0, 20.0, 0.0),
           child: Image.network(
             "https://upload.jianshu.io/users/upload_avatars/1929170/2c01ba904fa9.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/240/h/240"
             , width: 70.0, height: 70.0,),
-        )),
+        ),
         Expanded(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Text("2018",
-                style: TextStyle(fontSize: 20.0),
-                textAlign: TextAlign.start,
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("2018999",
+                    style: TextStyle(fontSize: 20.0),
+                  )
               ),
-              Text("2018",
-                textAlign: TextAlign.start,
-                style: TextStyle(fontSize: 20.0),
+              Container(
+                height: 10.0,
+              ),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("2018",
+                    style: TextStyle(fontSize: 20.0),
+                  )
               )
             ],
-          ),),
-        Expanded(child: Column(
+          ),
+        ),
+        Column(
           children: <Widget>[
-            Container(
-              width: 100.0,
+            RadiusBorderButton(
+              text: "安装",
+              width: 60.0,
               height: 30.0,
-              margin: const EdgeInsets.fromLTRB(0.0, 0.0, 30.0, 0.0),
-              child: RaisedButton(
-                  child: Text("安装",
-                      style: TextStyle(color: Colors.white)),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () {
-                    _package();
-                  }),
+              margin: const EdgeInsets.fromLTRB(0.0, 00.0, 30.0, 0.0),
+              textColor: Theme
+                  .of(context)
+                  .accentColor,
+              radius: 15.0,
+              boardWidth: 1.0,
+              boardColor: Theme
+                  .of(context)
+                  .accentColor,
             ),
-            Container(
-              width: 100.0,
+            RadiusBorderButton(
+              text: "分享",
+              width: 60.0,
               height: 30.0,
               margin: const EdgeInsets.fromLTRB(0.0, 10.0, 30.0, 0.0),
-              child: RaisedButton(
-                  child: Text("分享",
-                      style: TextStyle(color: Colors.white)),
-                  color: Theme
-                      .of(context)
-                      .accentColor,
-                  onPressed: () {
-                    _package();
-                  }),
+              textColor: Colors.red,
+              radius: 15.0,
+              boardWidth: 1.0,
+              boardColor: Colors.red,
             )
           ],
-        ),),
+        )
       ],
     );
-  }
-
-  _package() {
-
   }
 
   @override
@@ -113,56 +110,44 @@ class ProjectDetailViewState extends State<ProjectDetailView> {
           child: CircularProgressIndicator()
       );
     } else {
-      return ListView.builder(
-          itemCount: projectHistoryDatas.length * 2,
-          itemBuilder: (context, index) {
-            if (index.isOdd) {
-              return Divider();
-            } else {
-              index = index ~/ 2;
-              if (index == 0) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                  child: _buildItem(projectHistoryDatas[index]),
-                );
-              }
-              return _buildItem(projectHistoryDatas[index]);
-            }
-          });
       return Column(
         children: <Widget>[
-          Container(
-            padding: const EdgeInsets.fromLTRB(50.0, 50.0, 50.0, 20.0),
-            width: 500.0,
-            child: RaisedButton(
-                child: Text("一键打包",
-                    style: TextStyle(color: Colors.white)),
-                color: Theme
-                    .of(context)
-                    .accentColor,
-                onPressed: () {
-                  _package();
-                }),
+          RadiusBorderButton(
+            text: "一键打包",
+            width: 200.0,
+            height: 50.0,
+            margin: const EdgeInsets.fromLTRB(0.0, 20.0, 0.0, 20.0),
+            textColor: Colors.white,
+            textSize: 20.0,
+            radius: 25.0,
+            backgroundColor: Theme.of(context).accentColor,
+            onTap: (){
+              XYRoute.gotoPackage(context, "123");
+            },
           ),
-          ListView.builder(
-              itemCount: projectHistoryDatas.length * 2,
-              itemBuilder: (context, index) {
-                if (index.isOdd) {
-                  return Divider();
-                } else {
-                  index = index ~/ 2;
-                  if (index == 0) {
-                    return Container(
-                      padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                      child: _buildItem(projectHistoryDatas[index]),
-                    );
+          Expanded(
+            child: ListView.builder(
+                itemCount: projectHistoryDatas.length * 2,
+                itemBuilder: (context, index) {
+                  if (index.isOdd) {
+                    return Divider();
+                  } else {
+                    index = index ~/ 2;
+                    if (index == 0) {
+                      return Container(
+                        padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                        child: _buildItem(projectHistoryDatas[index]),
+                      );
+                    }
+                    return _buildItem(projectHistoryDatas[index]);
                   }
-                  return _buildItem(projectHistoryDatas[index]);
                 }
-              })
+            ),
+          )
         ],
       );
     }
   }
+
 
 }

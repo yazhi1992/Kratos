@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:english_words/english_words.dart';
 import 'package:flutter_app/pages/LoginPage.dart';
 
-void main() => runApp(LoginPage());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WelcomePage();
+    return MaterialApp(
+      home: LoginPage(),
+    );
   }
 }
 
