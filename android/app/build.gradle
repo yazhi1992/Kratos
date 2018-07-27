@@ -35,11 +35,18 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    def gitCommitCount = "git rev-list HEAD --count".execute().text.trim()
+
     buildTypes {
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix ".${gitCommitCount}"
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            versionNameSuffix ".${gitCommitCount}"
         }
     }
 }
