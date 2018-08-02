@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/utils/XYRoute.dart';
-import 'package:flutter_app/widget/BaseApp.dart';
-import 'package:flutter_app/widget/RadiusBorderButton.dart';
+import 'package:Kratos/utils/XYRoute.dart';
+import 'package:Kratos/widget/BaseApp.dart';
+import 'package:Kratos/widget/RadiusBorderButton.dart';
 
 class ProjectDetail extends StatelessWidget {
 

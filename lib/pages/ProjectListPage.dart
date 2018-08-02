@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'package:flutter_app/pages/ProjectDetail.dart';
-import 'package:flutter_app/utils/XYRoute.dart';
-import 'package:flutter_app/widget/BaseApp.dart';
+import 'package:Kratos/pages/ProjectDetail.dart';
+import 'package:Kratos/utils/XYRoute.dart';
+import 'package:Kratos/widget/BaseApp.dart';
 
 class ProjectListPage extends StatelessWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/LoginPage.dart';
+import 'package:Kratos/pages/LoginPage.dart';
 
 void main() => runApp(MyApp());
 

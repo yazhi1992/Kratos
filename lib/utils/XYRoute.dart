@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/pages/ProjectDetail.dart';
-import 'package:flutter_app/pages/ProjectListPage.dart';
-import 'package:flutter_app/pages/PackagePage.dart';
+import 'package:Kratos/pages/ProjectDetail.dart';
+import 'package:Kratos/pages/ProjectListPage.dart';
+import 'package:Kratos/pages/PackagePage.dart';
 
 class XYRoute {
 

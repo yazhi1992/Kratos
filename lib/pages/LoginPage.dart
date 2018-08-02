@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/utils/XYRoute.dart';
-import 'package:flutter_app/widget/BaseApp.dart';
-import 'package:flutter_app/widget/ProgressButton.dart';
+import 'package:Kratos/utils/XYRoute.dart';
+import 'package:Kratos/widget/BaseApp.dart';
+import 'package:Kratos/widget/ProgressButton.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -40,7 +40,6 @@ class _LoginViewState extends State<_LoginView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          ProgressButton(backgroundColor: Colors.white, textColor: Colors.blue, width: 100.0, height: 80.0, text: "下载",progress: 0.5,),
           //Column 子组件默认居中
           Container(
             padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 50.0),
