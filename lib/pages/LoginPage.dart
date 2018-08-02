@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:Kratos/utils/XYRoute.dart';
 import 'package:Kratos/widget/BaseApp.dart';
 import 'package:Kratos/widget/ProgressButton.dart';
+import 'package:flutter/services.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -25,13 +26,19 @@ class _LoginViewState extends State<_LoginView> {
   var autoFocus = false;
 
   void _login() {
-    setState(() {
-      autoFocus = false;
-    });
-    var name = _nameInputController.text;
-    var pwd = _pwdInputController.text;
-    print("$name-$pwd");
-    XYRoute.gotoProjectListPage(context);
+//    setState(() {
+//      autoFocus = false;
+//    });
+//    var name = _nameInputController.text;
+//    var pwd = _pwdInputController.text;
+//    print("$name-$pwd");
+//    XYRoute.gotoProjectListPage(context);
+
+  //复制到剪贴板
+//    Clipboard.setData(ClipboardData(text: "from flutter"));
+
+    Scaffold.of(context).showSnackBar(SnackBar(content: Text("haha"), backgroundColor: Colors.blue,));
+
   }
 
   @override
