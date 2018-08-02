@@ -1,3 +1,4 @@
+import 'package:Kratos/utils/DownloadUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:Kratos/utils/XYRoute.dart';
 import 'package:Kratos/widget/BaseApp.dart';
@@ -34,11 +35,40 @@ class _LoginViewState extends State<_LoginView> {
 //    print("$name-$pwd");
 //    XYRoute.gotoProjectListPage(context);
 
-  //复制到剪贴板
+    //复制到剪贴板
 //    Clipboard.setData(ClipboardData(text: "from flutter"));
 
-    Scaffold.of(context).showSnackBar(SnackBar(content: Text("haha"), backgroundColor: Colors.blue,));
+    Scaffold.of(context).showSnackBar(
+        SnackBar(content: Text("haha"), backgroundColor: Colors.blue,));
+  }
 
+  double downloadProgress = 0.0;
+  String btnText = "下载";
+  bool isDownloading = false;
+
+  _updateText() {
+    setState(() {
+      isDownloading = !isDownloading;
+      if (isDownloading) {
+        btnText = "暂停";
+        var url = "https://flutter.io/images/flutter-mark-square-100.png";
+        DownloadUtil.download(url, (received, total) {
+          _updateProgress(received, total);
+        });
+      } else {
+        btnText = "下载";
+      }
+    });
+  }
+
+  _updateProgress(int received, int total) {
+    setState(() {
+//      downloadProgress = (received / total * 100).toStringAsFixed(0);
+      //保留一位小数
+      downloadProgress = (received / total);
+      print("$received -- $total");
+//      print((received / total * 100).toStringAsFixed(0) + "%");
+    });
   }
 
   @override
@@ -47,6 +77,18 @@ class _LoginViewState extends State<_LoginView> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: ProgressButton(
+              width: 50.0,
+              height: 25.0,
+              text: btnText,
+              progress: downloadProgress,
+              onTap: () {
+                _updateText();
+              },
+            ),
+          ),
           //Column 子组件默认居中
           Container(
             padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 50.0),

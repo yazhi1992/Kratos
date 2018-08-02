@@ -12,6 +12,7 @@ class ProgressButton extends StatelessWidget {
   var progress; //0~1 进度值
   var radius;
   var boardWidth;
+  var onTap;
 
   ProgressButton({
     @required this.width,
@@ -22,36 +23,41 @@ class ProgressButton extends StatelessWidget {
     this.textColor = Colors.blue,
     this.fontSize = 13.0,
     this.radius = 5.0,
-    this.boardWidth = 1.0,}) : assert(progress > 0 && progress <= 1);
+    this.boardWidth = 1.0,
+    this.onTap
+  }) : assert(progress >= 0 && progress <= 1);
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-        children: <Widget>[
-          Container(
-            width: width,
-            height: height,
-            child: Center(
-              child: Text(
-                  text,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: fontSize, color: textColor)),),
-          ),
-          Container(width: width,
-            height: height,
-            child: CustomPaint(
-                painter: MyPainter(
-                    textColor,
-                    backgroundColor,
+    return InkWell(
+      child: Stack(
+          children: <Widget>[
+            Container(
+              width: width,
+              height: height,
+              child: Center(
+                child: Text(
                     text,
-                    progress,
-                    fontSize,
-                    radius,
-                    boardWidth),
-                size: Size(width, height)
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: fontSize, color: textColor)),),
             ),
-          )
-        ]
+            Container(width: width,
+              height: height,
+              child: CustomPaint(
+                  painter: MyPainter(
+                      textColor,
+                      backgroundColor,
+                      text,
+                      progress,
+                      fontSize,
+                      radius,
+                      boardWidth),
+                  size: Size(width, height)
+              ),
+            )
+          ]
+      ),
+      onTap: onTap,
     );
   }
 }
