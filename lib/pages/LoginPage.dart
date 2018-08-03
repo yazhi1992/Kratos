@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:Kratos/utils/DownloadUtil.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:Kratos/utils/XYRoute.dart';
 import 'package:Kratos/widget/BaseApp.dart';
@@ -46,20 +49,43 @@ class _LoginViewState extends State<_LoginView> {
   String btnText = "下载";
   bool isDownloading = false;
 
+  _doGet() async {
+    Dio dio = new Dio();
+    print("zyz_into _doGet");
+    Response re = await dio.get(
+        "https://api.github.com/users/yazhi1992");
+    print("zyz---${re.data}");
+    print("zyz_finish _doGet");
+    return re;
+  }
+
   _updateText() {
+//    Dio dio = new Dio();
+//    dio.get(
+//        "https://api.github.com/users/yazhi1992").then((response) {
+//      print("zyz${response.data}");
+//    });
+    Future fu = _doGet();
+    fu.then((response) {
+      print("zyz getData${response.data}");
+    });
+    print("zyz_updateText");
     setState(() {
+      print("zyz_setState");
       isDownloading = !isDownloading;
       if (isDownloading) {
         btnText = "暂停";
         var url = "https://flutter.io/images/flutter-mark-square-100.png";
-        DownloadUtil.download(url, (received, total) {
-          _updateProgress(received, total);
-        });
+//        DownloadUtil.download(url, (received, total) {
+//          _updateProgress(received, total);
+//        });
+
       } else {
         btnText = "下载";
       }
     });
   }
+
 
   _updateProgress(int received, int total) {
     setState(() {
@@ -68,6 +94,14 @@ class _LoginViewState extends State<_LoginView> {
       downloadProgress = (received / total);
       print("$received -- $total");
 //      print((received / total * 100).toStringAsFixed(0) + "%");
+    });
+  }
+
+  static const permissionChannel = const MethodChannel('permission');
+
+  _requestPermission() {
+    permissionChannel.invokeMethod("requestPermission").then((value) {
+      print("_requestPermission$value");
     });
   }
 
@@ -85,7 +119,8 @@ class _LoginViewState extends State<_LoginView> {
               text: btnText,
               progress: downloadProgress,
               onTap: () {
-                _updateText();
+//                _updateText();
+              _requestPermission();
               },
             ),
           ),
