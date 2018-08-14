@@ -1,11 +1,10 @@
 import 'dart:async';
-
-import 'package:Kratos/utils/DownloadUtil.dart';
+import 'package:Kratos/utils/SqlConnectHelper.dart';
+import 'package:Kratos/utils/Utils.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:Kratos/utils/XYRoute.dart';
 import 'package:Kratos/widget/BaseApp.dart';
-import 'package:Kratos/widget/ProgressButton.dart';
 import 'package:flutter/services.dart';
 
 class LoginPage extends StatelessWidget {
@@ -20,7 +19,6 @@ class _LoginView extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _LoginViewState();
   }
-
 }
 
 class _LoginViewState extends State<_LoginView> {
@@ -38,11 +36,7 @@ class _LoginViewState extends State<_LoginView> {
 //    print("$name-$pwd");
 //    XYRoute.gotoProjectListPage(context);
 
-    //复制到剪贴板
-//    Clipboard.setData(ClipboardData(text: "from flutter"));
-
-    Scaffold.of(context).showSnackBar(
-        SnackBar(content: Text("haha"), backgroundColor: Colors.blue,));
+    Utils.showSnackBar(context, "正在开发中...");
   }
 
   double downloadProgress = 0.0;
@@ -97,33 +91,12 @@ class _LoginViewState extends State<_LoginView> {
     });
   }
 
-  static const permissionChannel = const MethodChannel('permission');
-
-  _requestPermission() {
-    permissionChannel.invokeMethod("requestPermission").then((value) {
-      print("_requestPermission$value");
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(10.0),
-            child: ProgressButton(
-              width: 50.0,
-              height: 25.0,
-              text: btnText,
-              progress: downloadProgress,
-              onTap: () {
-//                _updateText();
-              _requestPermission();
-              },
-            ),
-          ),
           //Column 子组件默认居中
           Container(
             padding: const EdgeInsets.fromLTRB(0.0, 80.0, 0.0, 50.0),
@@ -149,7 +122,7 @@ class _LoginViewState extends State<_LoginView> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(50.0, 50.0, 50.0, 20.0),
+            padding: const EdgeInsets.fromLTRB(50.0, 50.0, 50.0, 60.0),
             width: 500.0,
             child: RaisedButton(
                 child: Text("登录",
@@ -160,6 +133,25 @@ class _LoginViewState extends State<_LoginView> {
                 onPressed: () {
                   _login();
                 }),
+          ),
+          Center(
+            child: Container(
+              width: 100.0,
+              height: 50.0,
+              child: InkWell(
+                child: Center(
+                  child: Text("值班小助手", textAlign: TextAlign.center,),),
+                onTap: () {
+                  if (SqlConnectHelper
+                      .getInstance()
+                      .isConnectingSuc) {
+                    XYRoute.gotoDutyHelperPage(context, false);
+                  } else {
+                    XYRoute.gotoMySqlLoginPage(context);
+                  }
+                },
+              ),
+            ),
           )
         ],
       ),
